@@ -1,0 +1,175 @@
+\documentclass[12pt, twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{amsthm}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{euscript}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{url}
+
+\usepackage[toc,page]{appendix}
+
+\usepackage{comment}
+\usepackage{rotating}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{definition}{Определение}[section]
+
+\numberwithin{equation}{section}
+
+\usepackage{autonum}
+
+\newcommand*{\No}{No.}
+\begin{document}
+
+\section{Асимптотическая нормальность}
+Пусть заданы объекты из некоторого распределения:
+\[
+\begin{aligned}
+\textbf{X}^{n} = \{X_i\}_{i=1}^{n},
+\end{aligned}
+\]
+где~$n$ число объектов.
+
+Пусть задано некоторое открытое подмножество~$\bm{\Theta}\in\mathbb{R}^d$. Подмножество~$\bm{\Theta}$ задает множество статистических моделей~$\mathcal{P}^{n} = \{P_{\theta}^{n}| \theta \in \bm{\Theta}\}.$ Пусть для каждого~$n$ существует мера~$P_{0}^{n}$ которая доминирует все меры из множества~$\mathcal{P}^{n}$. Пусть также все меры задаются своей плотностью~$p_{\theta}^{n}$.
+
+\begin{definition}
+\label{def:lan}
+Рассмотрим некоторую внутреннюю точку~$\theta^{*}\in \bm{\Theta}$ и последовательность~$\delta_{n} \to 0$. Пусть существует вектор~$\Delta^{n}_{\theta^{*}}$ и невырожденная матрица~$\textbf{V}_{\theta^{*}}$, такие, что последовательность~$\{\Delta^{n}_{\theta^{*}}\}$ ограничена по вероятностной мере, а также для любого компакта~$K \subset \mathbb{R}^{d}$ выполняется:
+\[
+\begin{aligned}
+\sup_{h\in K}\bigr|\log\frac{p^{n}_{\theta^{*}+\delta_{n}h}}{p^{n}_{\theta^{*}}}\bigr(\textbf{X}^{n}\bigr) -h^{\mathsf{T}}\textbf{V}_{\theta^{*}}\Delta^{n}_{\theta^*} - \frac{1}{2}h^{\mathsf{T}}\textbf{V}_{\theta^*}h\bigr| \overset{P_0^{n}}{\to} 0.
+\end{aligned}
+\]
+Тогда модель~$\mathcal{P}^{n}$ удовлетворяет условия локальной асимптотической нормальности в точке~$\theta^*$ (local asymptotic normality).
+\end{definition}
+
+Априорное распределение заданное на множестве~$\bm{\Theta}$ обозначим~$\Pi$, а его плотность~$\pi$. Предположим, что~$\pi$ положительно в некоторой окрестности точки~$\theta^*$.
+
+Апостериорное распределение построенное на основе множестве объектов~$\textbf{X}^{n}$ обозначим~$\Pi_{n}\bigr(A|\textbf{X}^{n}\bigr),$ где $A$ некоторое борелевское множество. Будем обозначать случайную величину из апостериорного распределения как~$\vartheta$.
+
+\section{Теорема Бернштейна фон Мизеса}
+\begin{theorem}
+Пусть для некоторой точки~$\theta^*$ выполено условия локальной асимптотической нормальности~(Опр.\ref{def:lan}).  Пусть задано априорное распределение~$\Pi$. Пусть для некоторой последовательности чисел~$M_n \to \infty$ выполняется следующее условие:
+\[
+\label{th:1}
+\begin{aligned}
+P_0^{n}\Pi_n\bigr(||\vartheta-\theta^*||>\delta_nM_n|\textbf{X}^n\bigr) \to 0.
+\end{aligned}
+\]
+Тогда последовательность апостериорных распределений сходится к последовательности нормальных:
+\[
+\begin{aligned}
+\sup_{B}\bigr|\Pi_{n}\bigr(\frac{\vartheta-\theta^*}{\delta_n}\in B|\textbf{X}^n\bigr)  - N_{\Delta^n_{\theta^*}, V^{-1}_{\theta^*}}\bigr(B\bigr)\bigr|  \overset{P_0^{n}}{\to} 0.
+\end{aligned}
+\]
+\end{theorem}
+\begin{proof}
+Апостериорное распределение для величины~$H=\frac{\vartheta-\theta^*}{\delta_n}$ полученное для выборки~$\textbf{X}^{n}$ обозначим~$\Pi_n$. Также обозначим~$N_{\Delta^n_{\theta^*}, V_{\theta^*}^{-1}}$ как~$\Phi_n$.
+Рассмотрим некоторый компакт~$K \subset \mathbb{R}^{d}$. Рассмотрим условное апостериорное распределение:
+\[
+\begin{aligned}
+\Pi_n^K\bigr(B|\textbf{X}^n\bigr) &= \Pi_n\bigr(B \cap K | \textbf{X}^n\bigr)/\Pi_n\bigr(K|\textbf{X}^n\bigr),\\
+\Phi_n^K\bigr(B\bigr) &= \Phi_n\bigr(B \cap K\bigr)/\Phi_n\bigr(K\bigr).
+\end{aligned}
+\]
+
+Рассмотрим некоторый компакт~$K \subset \mathbb{R}^{d}$. Для любой окрестности~$U\bigr(\theta^*\bigr) \subset \bm{\Theta}$ существует некоторый номер~$n$, такой, что $\theta^*+K\delta_n\subset U\bigr(\theta^*\bigr)$.
+
+Рассмотрим функцию~$f_n:K\times K \to \mathbb{R}:$
+\[
+\begin{aligned}
+f_n\bigr(g, h\bigr) = \left(1-\frac{\phi_n\bigr(h\bigr)s_n\bigr(g\bigr)\pi_n\bigr(g\bigr)}{\phi_n\bigr(g\bigr)s_n\bigr(h\bigr)\pi_n\bigr(h\bigr)}\right)_+,
+\end{aligned}
+\]
+где~$\phi_n, \pi_n$~--- распределение~$\Phi_n$ и~$\Pi_n$ соответственно,~$s_n$ является отношением правдоподобия:
+\[
+\begin{aligned}
+s_n\bigr(h\bigr) = \frac{p^n_{\theta^*+h\delta_n}}{p^n_{\theta^*}}.
+\end{aligned}
+\]
+Рассмотрим две произвольные последовательности~$\{h_n\}, \{g_n\} \subset K$:
+\[
+\label{eq:1}
+\begin{aligned}
+&\log\frac{\phi_n\bigr(h_n\bigr)s_n\bigr(g_n\bigr)\pi_n\bigr(g_n\bigr)}{\phi_n\bigr(g_n\bigr)s_n\bigr(h_n\bigr)\pi_n\bigr(h_n\bigr)} =\\
+&= \bigr(g_n-h_n\bigr)^{\mathsf{T}}\textbf{V}_{\theta^*}\Delta^n_{\theta^*}+\frac{1}{2}h^{\mathsf{T}}\textbf{V}_{\theta^*}h_n-\frac{1}{2}g_n^{\mathsf{T}}\textbf{V}_{\theta^*}g_n + o\bigr(1\bigr) -\\
+&= -\frac{1}{2}\bigr(h_n-\Delta^{n}_{\theta^*}\bigr)^{\mathsf{T}}\textbf{V}_{\theta^*}\bigr(h_n-\Delta^{n}_{\theta^*}\bigr) + \frac{1}{2}\bigr(g_n-\Delta^{n}_{\theta^*}\bigr)^{\mathsf{T}}\textbf{V}_{\theta^*}\bigr(g_n-\Delta^{n}_{\theta^*}\bigr) = o\bigr(1\bigr),
+\end{aligned}
+\]
+где первое слагаемое получено используя локальную асимптотическую нормальность (Опр.\ref{def:lan}), а второе с плотности нормального распределения. Тогда из~\eqref{eq:1} получаем, что:
+\[
+\label{eq:2}
+\begin{aligned}
+\sup_{g,h\in K}f_n\bigr(g, h\bigr) \overset{P_0}{\to}_{n \to \infty} 0.
+\end{aligned}
+\]
+
+Обозначим за~$\Xi_n$ событие, что~$\Pi_n\bigr(K\bigr)>0$.  Рассмотрим некоторое~$\eta > 0$, которое задает следующее множество:
+\[
+\label{eq:3}
+\begin{aligned}
+\Omega_n = \{\sup_{g,h\in K}f_n\bigr(g,h\bigr) \leq \eta\}_*,
+\end{aligned}
+\]
+где~$*$ обозначает измеримое покрытие множества. Из~\eqref{eq:2} и~\eqref{eq:3} получаем следующее неравенство:
+\[
+\label{eq:4}
+\begin{aligned}
+P_0^n||\Pi_n^K - \Phi_n^K||\mathbb{I}_{\Xi_n} \leq P_0^n||\Pi_n^K - \Phi_n^K||\mathbb{I}_{\Xi_n\cap \Omega_n} + 2P_0^n||\Pi_n^K - \Phi_n^K||\mathbb{I}_{\Xi_n \setminus \Omega_n},
+\end{aligned}
+\]
+где~$\mathbb{I}_{\Xi_n}$~--- индикаторная функция,~$||\cdot||$ является вариационной нормой~(total-variational norm). Второе слагаемое равняется нулю в силу~\eqref{eq:2}. Используя свойство данной нормы первое слагаемое принимает следующий вид:
+\[
+\begin{aligned}
+\frac{1}{2}P_0^n||\Pi_n^K - \Phi_n^K||\mathbb{I}_{\Xi_n\cap \Omega_n}  = P_0^n\int_K\left(1-\frac{d\Phi_n^K}{d\Pi_n^K}\right)_+d\Pi_n^K\mathbb{I}_{\Xi_n\cap \Omega_n} = \\
+=P_0^n\int_K\left(1-\int_K\frac{s_n\bigr(g\bigr)\pi_n\bigr(g\bigr)\phi^K_n\bigr(h\bigr)}{s_n\bigr(h\bigr)\pi_n\bigr(h\bigr)\phi^K_n\bigr(g\bigr)}d\Phi_n^K\bigr(g\bigr)\right)_+d\Pi_n^K\mathbb{I}_{\Xi_n\cap \Omega_n}.
+\end{aligned}
+\]
+Используя неравенство Йенсена, а также~\eqref{eq:2} получаем следующее:
+\[
+\begin{aligned}
+\frac{1}{2}P_0^n||\Pi_n^K - \Phi_n^K||\mathbb{I}_{\Xi_n\cap \Omega_n}  \leq P_0^n\int\left(1-\frac{s_n\bigr(g\bigr)\pi_n\bigr(g\bigr)\phi^K_n\bigr(h\bigr)}{s_n\bigr(h\bigr)\pi_n\bigr(h\bigr)\phi^K_n\bigr(g\bigr)}\right)_+d\Phi_n^K\bigr(g\bigr)d\Pi_n^K\mathbb{I}_{\Xi_n\cap \Omega_n} \leq \eta.
+\end{aligned}
+\]
+Подставляя в~\eqref{eq:4} получаем, что для любого компакта~$K\subset \mathbb{R}^d$ выполняется, что~$P_0^n||\Pi_n^K - \Phi_n^K||\mathbb{I}_{\Xi_n} \to 0$.
+
+Рассмотрим последовательность шаров~$\{K_m\}$ с центом в нуле с радиусом~$M_m$, причем~$M_m \to \infty$.
+
+Рассмотрим множество~$\left\{\Xi_n| \Xi_n = \{\Pi_n\bigr(K_n\bigr)>0\}\right\}$, по условию теоремы~\eqref{th:1} получим, что~$P^n_0\bigr(\Xi_n\bigr) \to 0$. Также получаем, что~$P_0^n||\Pi_n^{K_n} - \Phi_n^{K_n}||\to 0$.
+
+Теперь рассмотрим $P_0^n||\Pi_n - \Phi_n||$:
+\[
+\label{eq:5}
+\begin{aligned}
+P_0^n||\Pi_n - \Phi_n|| &\leq P_0^n||\Pi_n - \Pi_n^{K_n}|| + P_0^n||\Phi_n - \Phi_n^{K_n}|| \\
+&\leq 2\left(\Pi\bigr(\mathbb{R}^{d}\setminus K_n\bigr)\right) + 2\left(\Phi\bigr(\mathbb{R}^{d}\setminus K_n\bigr)\right) \to 0,
+\end{aligned}
+\]
+так как увеличивая радиус компакта в бесконечность мы покроем все множество~$\mathbb{R}^d$. Выражение~\eqref{eq:5} заканчивает доказательство данной теоремы.
+\end{proof}
+
+\begin{thebibliography}{99}
+\bibitem{Tianqi2016}
+	\textit{Kleijn, B. J. K., and van der Vaart, A. W.}  (2012). The Bernstein-Von-Mises theorem under misspecification. Electronic Journal of Statistics, 6, 354-381. \url{https://doi.org/10.1214/12-EJS675}
+
+\end{thebibliography}
+
+\end{document}
+
