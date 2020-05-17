@@ -1,44 +1,9 @@
-\documentclass[12pt, twoside]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
-
-\usepackage{amsthm}
-\usepackage{a4wide}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{mathrsfs}
-\usepackage{euscript}
-\usepackage{graphicx}
-\usepackage{subfig}
-\usepackage{caption}
-\usepackage{color}
-\usepackage{bm}
-\usepackage{tabularx}
-\usepackage{adjustbox}
-\usepackage{url}
-
-\usepackage[toc,page]{appendix}
-
-\usepackage{comment}
-\usepackage{rotating}
-
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-
-\newtheorem{theorem}{Теорема}
-\newtheorem{lemma}[theorem]{Лемма}
-\newtheorem{definition}{Определение}[section]
-
-\numberwithin{equation}{section}
-
-\usepackage{autonum}
+\documentclass[../main.tex]{subfiles}
 
 \newcommand*{\No}{No.}
 \begin{document}
 
-\section{Асимптотическая нормальность}
+\subsection{Асимптотическая нормальность}
 Пусть заданы объекты из некоторого распределения:
 \[
 \begin{aligned}
@@ -64,7 +29,7 @@
 
 Апостериорное распределение построенное на основе множестве объектов~$\textbf{X}^{n}$ обозначим~$\Pi_{n}\bigr(A|\textbf{X}^{n}\bigr),$ где $A$ некоторое борелевское множество. Будем обозначать случайную величину из апостериорного распределения как~$\vartheta$.
 
-\section{Теорема Бернштейна фон Мизеса}
+\subsection{Теорема Бернштейна фон Мизеса}
 \begin{theorem}
 Пусть для некоторой точки~$\theta^*$ выполено условия локальной асимптотической нормальности~(Опр.\ref{def:lan}).  Пусть задано априорное распределение~$\Pi$. Пусть для некоторой последовательности чисел~$M_n \to \infty$ выполняется следующее условие:
 \[

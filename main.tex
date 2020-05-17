@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{amsthm}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{euscript}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{url}
+
+\usepackage[toc,page]{appendix}
+
+\usepackage{comment}
+\usepackage{rotating}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{definition}{Определение}[section]
+
+\numberwithin{equation}{section}
+
+\usepackage{autonum}
+
+
+\usepackage{subfiles} % Best loaded last in the preamble
+\title{Фундаментальные теоремы машинного обучения}
+\date{2020}
+
+
+\begin{document}
+
+    \maketitle
+    \tableofcontents
+    \clearpage
+    \section{Теорема о связи распределений в экспонентном семействе (Бернштейн фон Мизес)}
+    \subfile{BernshteinFonMises/BernshteinFonMises}{}
+
+    %\section{Second section}
+    %\import{sections/}{section2}
+
+\end{document}
+
