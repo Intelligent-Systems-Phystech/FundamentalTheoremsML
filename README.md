@@ -15,7 +15,7 @@ Fundamental theorems of Machine Learning
 * РАС-learning, теорема о том, что сжатие предполагает обучаемость
 * Representer theorem, Schölkopf, Herbrich, and Smola
 * Вариационная аппроксимация
-* Сходимость про вероятности при выборе моделей  [(Черновой материал)](https://drive.google.com/drive/folders/13tUSipileOkbvzHRJinm3n2DeXyumzq6?usp=sharing
+* Сходимость про вероятности при выборе моделей  [(Черновой материал)](https://drive.google.com/drive/folders/13tUSipileOkbvzHRJinm3n2DeXyumzq6?usp=sharing)
 * [Теорема о связи распределений в экспонентном семействе](BernshteinFonMises/BernshteinFonMises.pdf)
 * (? Теорема про бандитов)
 * (? Копулы и теорема Скляра)   [(Черновой материал)](https://drive.google.com/drive/folders/1NM8ldEwCXRnRhuZff-Ok_dpXEycpyvuq?usp=sharing)
