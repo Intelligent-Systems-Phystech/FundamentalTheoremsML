@@ -1,0 +1,105 @@
+\documentclass[../main.tex]{subfiles}
+\subsection{Колмогоровская сложность моделей}
+
+Нужна мотивация и пара слов о префиксной сложности.
+
+% Определение
+\begin{definition}
+Колмогоровская сложность:
+\[
+K(x) = \min_{p \in \{0,1\}^* ,i \in \cN}\{|p|: T(p) = x\},
+\]
+\end{definition}
+
+
+Перечислим некоторые свойства колмогоровской сложности.
+
+
+\textbf{Невычислимость }
+% Лемма
+\begin{theorem}~\cite{kolmogorov}
+Пусть $k$ --- произвольная вычислимая функция. Если $k(x) \leq K(x) $ для всех $x$, для которых определена $k$, то $k$ --- ограничена.
+\end{theorem}
+
+
+
+% Chain Rule
+\textbf{Оценка условной Колмогоровской сложности}~\cite{kolmogorov}
+\[
+	K(x,y) \leq K(x) + K(y|x) + O(\log K(x,y)).
+\]
+
+
+Разность $I(x:y) = K(y) - K(y|x)$ задает количество информации в $x$ об объекте $y$. 
+\textbf{Количество информации в паре x,y симметрично с точностью до константы}:
+\[
+I(x:y) = I(y:x) + O(\text{log}K(x,y)).
+\]
+
+Отметим, что схожими свойствами обладает взаимная информация:
+\[
+	I(x,y) = H(x) - H(x|y), \quad H(x) = - \sum_{i} p_x(x_i) \log p_x(x_i);
+\]
+\[
+	I(x,y) = I(y,x).
+\]
+
+
+\begin{theorem}~\cite{grun_ks}
+Пусть f --- вычислимая функция вероятности на пространстве бинарных векторов произвольной длины. Тогда 
+\[
+	0 \leq \bigl(\mathsf{E}_f K(X) - H(x) \bigr) \leq K(f)  + O(1).
+\]
+\end{theorem}
+\begin{proof}
+K(X) --- это длина префиксного кода для x, по noiseless coding theorem:
+\[
+	H(X) \leq \mathsf{E}_f K(X).
+\]
+
+\[
+	f(x) \leq 2^{K(f) + O(1)} (K(x) + O(1)):
+\]
+
+\[
+	 \log\frac{1}{f(x)} \geq K(x) - K(f) - O(1):
+\]
+\[
+	\sum_{x} f(x) K(X) \leq H(X) + K(f)  + O(1).
+\]
+
+\end{proof}
+
+
+
+
+\subsection{Принцип минимальной длины описания}
+Рассмотрим префиксную сложность, которая описывается машиной Тьюринга специального вида, имеющих однонаправленную ленту для чтения и двунаправленную рабочую ленту. Будем полагать что машина Тьюринга $T$ останавливается на $p$ с выводом $x$: $T(p) = x$, если вся зхапись $p$ осталась слева от читающей каретки, $x$ осталась слева от пишушщей каретки и $T$ остановлена.
+\begin{definition}
+Префиксная Колмогоровская сложность:
+\[
+K(x) = \min_{p \in \{0,1\}^* ,i \in \cN}\{|i|+|p|: T_i(p) = x\},
+\]
+\end{definition}
+% Sub Kolmogorov
+% MDL
+% Theorem
+
+\subsection{Вероятностная интерпретация минимальной длины описания}
+% MDL: UML
+% MDL: optimal
+% MDL: Bayes
+
+
+
+\begin{document}
+\begin{thebibliography}{99}
+\bibitem{kolmogorov}
+	Успенский В., Шень А., Верещагин Н. Колмогоровская сложность и алгоритмическая случайность. – Litres, 2017
+
+\bibitem{grun_ks}
+Grunwald P., Vitányi P. Shannon information and Kolmogorov complexity //arXiv preprint cs/0410002. – 2004.
+\end{thebibliography}
+
+\end{document}
+
