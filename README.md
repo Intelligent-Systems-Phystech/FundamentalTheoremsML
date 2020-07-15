@@ -23,3 +23,5 @@ Fundamental theorems of Machine Learning
 * MDL  [(Черновой материал)](https://drive.google.com/drive/folders/1E1-ccv9NQy7W9ZzE-8cUZmpb4k-pWf2I?usp=sharing)
 
 
+## План (что хочется включить):
+* Энтропия, кросс-энтропия, взаимная информация. Ключевые понятия теории информации
