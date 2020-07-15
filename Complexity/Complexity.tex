@@ -18,6 +18,20 @@ K_T(x) = \min_{f \in \{0,1\}^*}\{|f|: T(f) = x\},
 Заметим, что колмогоровская сложность зависит от отображения $T$. В~\cite{kolmogorov} доказано, что колмогоровсксая сложность $K_T(x)$ при двух отображениях $T_1, T_2$ отличается лишь на некоторую константу, не зависящих от строки $x$. Поэтому для дальнейшего изложения зафиксируем некоторое отображение $T$ и положим $K(x) = K_T(x)$.
 
 
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=cm, auto]
+  %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+  \node (x)  at (1,3)                  {$T(f) \in \{0,1\}^{+}$};
+  \node (f)  at (6,3)                  {$x \in \{0,1\}^{+}$};
+\path[->]  (x) edge  node   {$\argmin |f|$} (f);
+
+\end{tikzpicture}
+
+\caption{}
+\end{figure}
+
+
 Обобщим понятие колмогоровской сложности на случай двух бинарных строк.
 
 \begin{definition}
@@ -94,7 +108,7 @@ K(x|C, p_0) \leq \log C + O(1).
 \]
 Воспользуемся формулой Стирлинга:
 \[
-    n! = \sqrt{(2\pi + o(1))n}\frac{n}{e}^n.
+    n! = \sqrt{(2\pi + o(1))n}\bigl(\frac{n}{e}^n\bigr).
 \]
 И получим оценку:
 \[
@@ -151,6 +165,22 @@ K(S) = \min_{f \in \{0,1\}^*}\{|f|: T_i(f) \text{ перечисляет все 
 \end{equation}
 где $\alpha$ --- максимально допустимая сложность множества $S$.
 
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=cm, auto]
+  %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+  \node (f)  at (1,3)                  {f};
+  \node (S)  at (4,4)                  {S};
+  \node (x)  at (7,3)                  {x};
+\path[->]  (f) edge  node   {$\argmin |f|$} (S);
+\path[->]  (S) edge  node   {$\argmin_{S} \{\log|S| + K(S): x \in S, K(s) \leq \alpha$} (x);
+
+\end{tikzpicture}
+
+\caption{}
+\end{figure}
+
+
 Заметим, что решение задачи выбора модели в приведенном выше виде является вычислимой, то есть можно предложить алгоритм, вычисляющий данную задачу. Приведем схему данного алгоритма:
 \begin{algorithmic}
 \STATE Положим $\hat{p}, \hat{S}$ неопределенными;
@@ -195,39 +225,39 @@ K(S) = \min_{f \in \{0,1\}^*}\{|f|: T_i(f) \text{ перечисляет все 
 \[
 R(x) =  - \log P(x) + \min_{\mathbf{f}} (\log P(x|\mathbf{f})).
 \]
-Регрет характеризует разницу между длиной предлагаеистинного кода для $x$ в сравнении с наилучшим кодом из некоторого множества $\mathbf{f}$.
+Регрет характеризует разницу между длиной рассматриваемого $\log P(x)$ кода для $x$ в сравнении с наилучшим кодом из некоторого множества $\mathbf{f}$.
 
-Пусть модель $\mathbf{f}$ зависит от параметра $w$:
+Пусть модель $\mathbf{f}$ зависит от вектора параметра $\mathbf{w}$:
 \[
-    \log p(x|\mathbf{f}) = \log p(x|w(x)),
+    \log p(x|\mathbf{f}) = \log p(x|\mathbf{w}(x)),
 \]
-где $w(x)$ --- оптимальные параметры для объекта $x$.
+где $\mathbf{w}(x)$ --- оптимальные параметры для объекта $x$.
 
 Тогда регрет выглядит следующим образом:
 \[
-R(x) =  - \log P(x) + \min_{w} (\log P(x|w(x)).
+R(P, x) =  - \log P(x) + \min_{\mathbf{w}} (\log P(x|\mathbf{w}(x)).
 \]
 
 Для всей выборки регрет определяется следующим образом:
 \[
-R(\mathbf{X}) =  \max_{x \in \mathbf{X}} (- \log P(x) + \min_{w} (\log P(x|w(w))).
+R(\mathbf{X}) =  \max_{x \in \mathbf{X}} (- \log P(x) + \min_{\mathbf{w}} (\log P(x|\mathbf{w}(w))).
 \]
 
 
-\begin{theorem}[(Штарьков, 1987)~\ref{mdl,shtarkov}]
+\begin{theorem}[(Штарьков, 1987)~\ref{mdl},\ref{shtarkov}]
 Пусть велична
 \[
-    \log \sum_{x} p(x|w(x))
+    \log \sum_{x} p(x|\mathbf{w}(x))
 \]
 конечна.  Тогда следующее выражение доставляет единственный минимум регрета $R(\mathbf{X})$:
 \[
-    \frac{p(x|w(x))}{\sum_{x' \in \mathbf{X}}p(x'|w(x')) }.
+    \frac{p(x|\mathbf{w}(x))}{\sum_{x' \in \mathbf{X}}p(x'|\mathbf{w}(x')) }.
 \]
 \end{theorem}
 \begin{proof}
 Рассмотрим выражение регрета для данной вероятностной меры:
 \[
-    - \log P(x) + \min_{w} (\log P(x|w(w)))  = \log \sum_{x} p(x|w(x)).
+    - \log P(x) + \min_{\mathbf{w}} (\log P(x|\mathbf{w}(w)))  = \log \sum_{x} p(x|\mathbf{w}(x)).
 \]
 Выражение регрета не зависит от объекта выборки $x$. 
 Заметим, что для любых двух отличных распределений  $p_1$, $p_2$ существует хотя бы один элемент, такой что 
@@ -242,68 +272,85 @@ R(\mathbf{X}) =  \max_{x \in \mathbf{X}} (- \log P(x) + \min_{w} (\log P(x|w(w))
 
 Тогда для любого распределения на выборке существует элемент $x'$:
 \[
-    \frac{p(x'|w(x'))}{\sum_{x}p(x|w(x)) } > p(x').
+    \frac{p(x'|\mathbf{w}(x'))}{\sum_{x}p(\mathbf{w}|w(x)) } > p(x').
 \]
 Тогда 
 \[
-R(P, x)  \geq -\log p(x') + \log p(x'|w(x')) > \frac{p(x'|w(x'))}{\sum_{x}p(x|w(x)) } = R(x).
+R(P, x)  \geq -\log p(x') + \log p(x'|\mathbf{w}(x')) > \frac{p(x'|\mathbf{w}(x'))}{\sum_{x}p(x|\mathbf{w}(x)) } = R(x).
 \]
 
 \end{proof}
 
-TODO: слова про байеса
-Байесовской интерпертацией минимальной длины описания выступает \textit{evidence} или \textit{обоснованность модели}:
+Альтернативным методом выбора модели является двусвязный байесовский вывод.
+На \textit{первом уровне} байесовского вывода находится апостериорное распределение параметров:
+\begin{equation}
+\label{eq:bayes}
+    \hat{\mathbf{w}} = \argmax \frac{p(\mathbf{X}|\mathbf{w}, \mathbf{f})p(\mathbf{w}|\mathbf{f})}{p(\mathbf{X}| \mathbf{f}}),
+\end{equation}
+где $p(\mathbf{X}|\mathbf{w}, \mathbf{f})$ --- правдоподобие выборки при условии модели $\mathbf{f}$ с параметрами $\mathbf{w}$, $p(\mathbf{w}|\mathbf{f})$ --- априорное распределение параметров при условии модели $\mathbf{f}$. Оно задается на основе наших предположений о природе выборки и о способах ее порождения. Знаменатель $p(\mathbf{w}|\mathbf{f})p(\mathbf{X}| \mathbf{f})$ называется \textit{evidence} или \textit{обоснованность модели} и определяет, насколько хорошо модель способна описать выборку в среднем по всем возможным значениям параметров.
+
+
+На \textit{втором уровне} байесовского вывода осуществляется выбор модели на основе обоснованности модели:
 \[
-    \int_{w} p(x|w) p(w)dw, 
+\mathbf{f} = \argmax p(\mathbf{w}|\mathbf{f})p(\mathbf{X}| \mathbf{f}) = \int_{\mathbf{w}} p(\mathbf{X}|\mathbf{w}, \mathbf{f})p(\mathbf{w}|\mathbf{f}) d\mathbf{w}
 \]
-где $p(w)$ --- априорное распределения на выборке. Оно задается на основе наших предположений о природе выборки и о способах ее порождения.
+Эта величина также выступает байесовской интерпертацией минимальной длины. Для подтверждения этого факта докажем следующую теорему.
 
 \begin{theorem}
-Пусть $M$ --- экспоненциальное семейство.
+Пусть правдоподобие $p(\mathbf{X}|\mathbf{w}, \mathbf{f})$ соответствует экспоненциальному семейству распределений, т.е.
+\[
+    p(x|\mathbf{w}, \mathbf{f}) = h(x)g(\boldsymbol{\eta}) \text{exp}\left(\boldsymbol{\eta} \cdot \mathbf{T}(x)\right),
+\]
+где $h, g, \mathbf{T}$ --- некоторые функции, $\boldsymbol{\eta}$ --- некоторый параметр распределения.
 
 Пусть в качестве априорного распределения выступает распределение Джефри:
 \[
-    p(w) = \frac{\sqrt{I}}{\int_w \sqrt{I(w)}}, \text{ где } I --- \text{определить матрицы Фишера:}    
+    p(\mathbf{w}|\mathbf{f}) = \frac{\sqrt{I}}{\int_w \sqrt{I(w)}}, \text{ где } I  \text{---определить матрицы Фишера:}    
 \]
 \[
-    I(w) = \text{det}\{\mathsf{E}_w \frac{-\partial^2}{\partial w_i \partial w_j } \log p(x|w) \}_{ij}.
+    I(\mathbf{w}) = \text{det}\{\mathsf{E}_w \frac{-\partial^2}{\partial w_i \partial w_j } \log p(\mathbf{X}|\mathbf{w}, \mathbf{f}) \}_{ij}.
 \]
 Тогда регрет можно аппроксимировать следующим выражением:
 \[
-\frac{k}{2}\log{\frac{n}{2\pi}} - \log p(x|w) + \log \sqrt{I(w)}.
+\frac{k}{2}\log{\frac{n}{2\pi}} - \log p(\mathbf{X}|\mathbf{w}, \mathbf{f}) + \log \sqrt{I(\mathbf{w})}.
 \]
 
 \end{theorem}
 
 \begin{proof}
 Воспользуемся аппроксимацией Лапласа для упрощения формулы обоснованности модели.
-Разложим $\log p(x, w) = \log p(x|w)p(w)$ в точке локального максимума $w_0$ в ряд Тейлора:
+Разложим $\log p(\mathbf{X}, \mathbf{w}|\mathbf{f}) = \log p(\mathbf{X}|\mathbf{w},\mathbf{f})p(\mathbf{w}|\mathbf{f})$ в точке локального максимума $\mathbf{w}_0$ в ряд Тейлора:
 \[
-    \log p(x,w) \approx \log p(x,w_0)  - \frac{1}{2} (w-w_0)^\T A (w-w_0),
+    \log p(\mathbf{X}, \mathbf{w}|\mathbf{f}) \approx \log p(\mathbf{X}, \mathbf{w}_0|\mathbf{f})  - \frac{1}{2} (\mathbf{w}-\mathbf{w}_0)^\T \mathbf{A} (\mathbf{w}-\mathbf{w}_0),
 \]
 \[
-    A_{ij} = -\frac{\partial^2}{\partial w_i \partial w_j}\log p(x,w)|_{w = w_0}.
+    A_{ij} = -\frac{\partial^2}{\partial w_i \partial w_j}\log p(\mathbf{X}, \mathbf{w}|\mathbf{f})|_{\mathbf{w} = \mathbf{w}_0}.
 \]
 
 Полученное распределение представимо в виде ненормированного гауссового распределения. для такой аппроксимации плотности вероятности запишем нормирующий коэффициент: 
 \[
-    \log p(x,w) \approx \log p(x|w_0) + p(w_0) - \log \sqrt{\frac{(2\pi)^k} - {\det A}}.
+    \log p(\mathbf{X}, \mathbf{w}|\mathbf{f}) \approx \log p(\mathbf{X}|\mathbf{w}_0, \mathbf{f}) + p(\mathbf{w}_0|\mathbf{f}) - \log \sqrt{\frac{(2\pi)^k} - {\det \mathbf{A}}}.
 \]
 
 Подставляя в полученную формулу распределение Джеффри получим:
 \[
-    p(x,w) \approx p(x| w_0) - \log\sqrt{\frac{(2\pi)^k}{2}}.
+    p(\mathbf{X}, \mathbf{w}|\mathbf{f}) \approx p(\mathbf{X}|\mathbf{w}_0, \mathbf{f}) - \log\sqrt{\frac{(2\pi)^k}{2}}.
 \]
 TODO: там еще информация Фишера + экспоненциальное семейство.
 Тогда регрет будет равен:
 \[
-    R(x)  \approx  \log\sqrt{\frac{(2\pi)^k}{2}}.
+    R(P, x) \approx  \log\sqrt{\frac{(2\pi)^k}{2}}.
 \]
 \end{proof}
 
 \begin{theorembd}
-При количество параметров, стремящемся к бесконечности  оптимальной модели отличается от байесовской оценки на константу.
+При количество параметров, стремящемся к бесконечности, регрет оптимальной модели отличается от байесовской оценки на константу:
+\[
+R(P, x) = \frac{k}{2} \log \frac{n}{2\pi} + \log{\int_{\mathbf{w}}} \sqrt{I(\mathbf{w}} d\mathbf{w} + o(1).
+\]
 \end{theorembd}
+
+TODO: вывод, что эти вещи совпадают.
 \begin{thebibliography}{99}
 \bibitem{kolmogorov}
 	Успенский В., Шень А., Верещагин Н. Колмогоровская сложность и алгоритмическая случайность. – Litres, 2017
@@ -317,6 +364,8 @@ Vereshchagin N. K., Vitányi P. M. B. Kolmogorov's structure functions and model
 \bibitem{mdl}
 Grunwald P. A tutorial introduction to the minimum description length principle //arXiv preprint math/0406077. – 2004.
 
+\bibitem{shtarkov}
+Штарьков Ю. М. Универсальное последовательное кодирование отдельных сообщений //Проблемы передачи информации. – 1987. – Т. 23. – №. 3. – С. 3-17.
 \end{thebibliography}
 
 \end{document}
