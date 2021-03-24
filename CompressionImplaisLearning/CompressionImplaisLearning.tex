@@ -1,0 +1,120 @@
+\documentclass[../main.tex]{subfiles}
+
+\newcommand*{\No}{No.}
+\begin{document}
+
+\subsection{PAC-learning}
+
+\begin{definition}
+Класс гипотез~$\mathcal{H}$ является PAC-обучаемым над множеством объектов~$Z=z_1, \cdots z_d$ для функции потерь~$l:\mathcal{H}\times Z\to \mathbb{R}_{+},$ если существует функция~$m_{\mathcal{H}}:\left(0,1\right)^2\to \mathbb{N}$ и алгоритм~$\mathcal{A}$ со свойством:
+для всех $\varepsilon, \delta \in \left(0,1\right)$, для любого распределения~$\mathcal{D}$ над множеством объектов~$Z$ алгоритм~$\mathcal{A}$ возвращает такое $h\in \mathcal{H},$ что с вероятностью~$1-\delta$ выполняется:
+\[
+\begin{aligned}
+\mathsf{E}_{z\sim \mathcal{D}}\left[l\bigr(h, z\bigr)\right] \leq \min_{h'\in \mathcal{H}} \mathsf{E}_{z\sim \mathcal{D}}\left[l\bigr(h', z\bigr)\right] +\varepsilon.
+\end{aligned}
+\]
+\end{definition}
+
+\subsection{Sample Compression scheme}
+Схема сжатия данных с параметром $k$ состоит из двух отображений~$\left(\kappa, \rho\right):$
+\begin{enumerate}
+    \item $\kappa$ получает на вход выборку~$S,$ а на выходе получаем пару~$\left(S', I\right),$ где $|S'|=k$;
+    \item $\rho$ получает на вход пару~$\left(S', I\right)$ на выходе выдает гипотезу~$h$.
+\end{enumerate}
+Причем выполняется следующее условие:
+\begin{enumerate}
+    \item $\kappa\bigr(Y, y\bigr) = \left(\left(Z, z\right), I\right)$;
+    \item $\rho\bigr(\kappa\bigr(Y, y\bigr)\bigr)|_{Y} = y$.
+\end{enumerate}
+
+\subsection{Compression implais learning}
+Любую схему сжатия с параметром $k$ можно рассматривать как алгоритм обучения~$A = \rho \circ \kappa$. То что данный алгоритм PAC-обучаем доказывает следующая теорема.
+\begin{theorem}
+Алгоритм обучения~$A = \rho \circ \kappa$ является PAC-обучаемым, то есть
+\[
+\begin{aligned}
+P\bigr[p\bigr(\left\{h\bigr(z\bigr)\not=f\bigr(z\bigr) \right\}\bigr)>\varepsilon\bigr] \leq |I|\sum_{j=1}^{k}{{d}\choose{j}}\left(1-\varepsilon\right)^{m-j},
+\end{aligned}
+\]
+где $p$ распределение над $Z$.
+\end{theorem}
+\begin{proof}
+Сначала заметим, что всего существует
+\[
+\begin{aligned}
+\sum_{j=1}^{k}{{d}\choose{j}}
+\end{aligned}
+\]
+подмножеств $T$ множества $Z$ размера не более k. С другой стороны всего есть $|I|$ вариантов выбрать информацию сжатия  $i \in I$.
+Из выше описанного получаем, что каждой паре $\left(T, i\right)$ соответствует своя функция 
+\[
+\begin{aligned}
+h_{T,i}=\rho\bigr(\left(T, i\right), i\bigr).
+\end{aligned}
+\]
+С построения $h_{T, i}$ следует, что $h_{T, i}$ не зависит от $Z \setminus T$, тогда получаем, что если
+\[
+        p\bigr(\left\{h_{T,i}\bigr(x\bigr) \not=f(x)\right\}\bigr) \geq \varepsilon,
+\]
+то для всех $m -|T|$ выполняется получаем, что
+\[
+    \label{eq:2}
+    \begin{aligned}
+        \prod_{t=1}^{m-|T|}p\bigr(\left\{h_{T,i}\bigr(x\bigr) \not=f(x)\right\}\bigr) \leq \left(1-\varepsilon\right)^{m-|T|}.
+    \end{aligned}
+\]
+Получаем, что для любого $h_{T, i}$ выполняется неравенство \eqref{eq:2}.
+
+И того получаем, что для произвольной $h_{T, i}$ выполняется неравенство:
+\[
+\begin{aligned}
+    P\bigr[p\bigr(\left\{h_{T, i}\bigr(z\bigr)\not=f\bigr(z\bigr) \right\}\bigr)>\varepsilon\bigr] \leq \left(1-\varepsilon\right)^{m-|T|},
+\end{aligned}
+\]
+
+Рассмотрим множество функций при фиксированном $i \in I$:
+\[
+    \label{eq:3}
+    \begin{aligned}
+        \mathcal{H}_{i} = \left\{h_{T, i}: |T| \leq k\right\},
+    \end{aligned}
+\]
+тогда для алгоритма $A$ для подмножества функций, которые получены при помощи сжатой информации $i$ получаем:
+\[
+\begin{aligned}
+    \label{eq:4}
+    P\bigr[p\bigr(\left\{h_{T, i}\bigr(z\bigr)\not=f\bigr(z\bigr) \right\}\bigr)>\varepsilon\bigr] \leq \sum_{j=1}^{k}{{d}\choose{j}}\left(1-\varepsilon\right)^{m-j},
+\end{aligned}
+\]
+где $h_{T, i}$ это лучший алгоритм из множества $\mathcal{H}_{i}$.
+
+Теперь заметим, что финальная функция $h$ принадлежит множеству:
+\[
+    \label{eq:5}
+    \begin{aligned}
+        \mathcal{H}_{\kappa, \rho} = \left\{h_{T, i}: |T| \leq k, i \in I\right\}.
+    \end{aligned}
+\]
+Вспомним, что для каждого $T$ таких функций $|I|,$ из чего уже для произвольного $h$ используя выражение \eqref{eq:4} имеем следующее неравенство:
+\[
+\begin{aligned}
+P\bigr[p\bigr(\left\{h\bigr(z\bigr)\not=f\bigr(z\bigr) \right\}\bigr)>\varepsilon\bigr] \leq |I|\sum_{j=1}^{k}{{d}\choose{j}}\left(1-\varepsilon\right)^{m-j},
+\end{aligned}
+\]
+что и доказывает исходную теорему.
+\end{proof}
+
+\begin{thebibliography}{99}
+\bibitem{Floyd1993}
+	\textit{Floyd, S., Warmuth, M.} (1995) Sample Compression, Learnability, and the Vapnik-Chervonenkis Dimension. // Machine Learning 21, 269–304.  \url{https://doi.org/10.1023/A:1022660318680}
+	
+\bibitem{Vyigin2012}
+    \textit{В.В.Вьюгин} КОЛМОГОРОВСКАЯ СЛОЖНОСТЬ И АЛГОРИТМИЧЕСКАЯ СЛУЧАЙНОСТЬ (2012) // МФТИ. 
+    
+\bibitem{Shey2015}
+    \textit{Shay Moran, Amir Yehudayoff} Sample Compression Schemes for VC Classes (2015) // \url{https://www.cs.bgu.ac.il/~adsmb182/wiki.files/meni-lecture.pdf}
+
+
+\end{thebibliography}
+
+\end{document}
