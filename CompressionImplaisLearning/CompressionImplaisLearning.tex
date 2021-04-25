@@ -9,11 +9,20 @@
 Класс гипотез~$\mathcal{H}$ является PAC-обучаемым над множеством объектов~$Z=z_1, \cdots z_d$ для функции потерь~$l:\mathcal{H}\times Z\to \mathbb{R}_{+},$ если существует функция~$m_{\mathcal{H}}:\left(0,1\right)^2\to \mathbb{N}$ и алгоритм~$\mathcal{A}$ со свойством:
 для всех $\varepsilon, \delta \in \left(0,1\right)$, для любого распределения~$\mathcal{D}$ над множеством объектов~$Z$ алгоритм~$\mathcal{A}$ возвращает такое $h\in \mathcal{H},$ что с вероятностью~$1-\delta$ выполняется:
 \[
+ \label{def:1}
 \begin{aligned}
 \mathsf{E}_{z\sim \mathcal{D}}\left[l\bigr(h, z\bigr)\right] \leq \min_{h'\in \mathcal{H}} \mathsf{E}_{z\sim \mathcal{D}}\left[l\bigr(h', z\bigr)\right] +\varepsilon.
 \end{aligned}
 \]
 \end{definition}
+Пример для задачи классификации выражение \eqref{def:1} можно переписать в виде:
+\[
+\begin{aligned}
+\begin{aligned}
+P\bigr[p\bigr(\left\{h\bigr(z\bigr)\not=f\bigr(z\bigr) \right\}\bigr)>\varepsilon\bigr] \leq \delta
+\end{aligned}
+\end{aligned}
+\]
 
 \subsection{Sample Compression scheme}
 Схема сжатия данных с параметром $k$ состоит из двух отображений~$\left(\kappa, \rho\right):$
@@ -52,15 +61,15 @@ P\bigr[p\bigr(\left\{h\bigr(z\bigr)\not=f\bigr(z\bigr) \right\}\bigr)>\varepsilo
 h_{T,i}=\rho\bigr(\left(T, i\right), i\bigr).
 \end{aligned}
 \]
-С построения $h_{T, i}$ следует, что $h_{T, i}$ не зависит от $Z \setminus T$, тогда получаем, что если
+С построения $h_{T, i}$ следует, что $h_{T, i}$ не зависит от $Z \setminus T$, тогда получаем, что если для одного объекта $z\in Z \setminus T$ вероятность ошибки:
 \[
-        p\bigr(\left\{h_{T,i}\bigr(x\bigr) \not=f(x)\right\}\bigr) \geq \varepsilon,
+        p\bigr(\left\{h_{T,i}\bigr(z\bigr) \not=f(z)\right\}\bigr) \geq \varepsilon,
 \]
-то для всех $m -|T|$ выполняется получаем, что
+то для всех объектов $z\in Z \setminus T$ вероятность того, что на нем нет ошибки равна
 \[
     \label{eq:2}
     \begin{aligned}
-        \prod_{t=1}^{m-|T|}p\bigr(\left\{h_{T,i}\bigr(x\bigr) \not=f(x)\right\}\bigr) \leq \left(1-\varepsilon\right)^{m-|T|}.
+        \prod_{z\in Z \setminus T}p\bigr(\left\{h_{T,i}\bigr(z\bigr) =f(z)\right\}\bigr) \leq \left(1-\varepsilon\right)^{m-|T|}.
     \end{aligned}
 \]
 Получаем, что для любого $h_{T, i}$ выполняется неравенство \eqref{eq:2}.
